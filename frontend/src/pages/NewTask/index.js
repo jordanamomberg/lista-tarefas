@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { FiX } from "react-icons/fi";
 
 import api from "../../services/api";
 
@@ -21,6 +22,7 @@ export default function NewTask() {
       concluido:status,
     };
 
+    console.log(data)
     try {
       await api.post("/tarefas", data);
 
@@ -33,6 +35,10 @@ export default function NewTask() {
   return (
     <div className="new-task-container">
       <div className="content">
+        <button className="close" onClick={() => history.push('/')}>
+          <FiX size={24} color="#FF1493"/>
+        </button>
+
         <form onSubmit={handleNewTask}>
           <input
             placeholder="Título"
@@ -46,11 +52,20 @@ export default function NewTask() {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <input
-            placeholder="Concluído: Ex '0 ou 1'"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
+          <select onChange={(e) => setStatus(e.target.value)}>
+            <option value="" >Status</option>
+            <option 
+              value="1"
+              
+            >
+              OK
+            </option>
+            <option 
+              value="0"
+            >
+              Não OK
+            </option>
+          </select>
 
           <button className="button">Cadastrar</button>
         </form>

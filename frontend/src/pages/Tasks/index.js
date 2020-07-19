@@ -47,7 +47,7 @@ export default function Tasks() {
 
             <strong>Concluído:</strong>
             <p>
-              {task.concluido === 0 ? (
+              {task.concluido == 0 ? (
                 <FiXCircle size={18} color="#FF0000" />
               ) : (
                 <FiCheckCircle size={18} color="#32CD32" />

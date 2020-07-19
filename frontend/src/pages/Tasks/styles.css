@@ -29,7 +29,6 @@
 .task-container ul li { 
     background: #333;
     box-shadow: 0 0 50px rgba(255, 20, 147, 0.20);
-    border-radius: 8px;
     padding: 24px;
     position: relative;
 }
