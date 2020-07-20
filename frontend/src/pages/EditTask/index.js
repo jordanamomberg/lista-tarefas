@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { FiX } from "react-icons/fi";
+import { toast } from 'react-toastify';
 
 import api from "../../services/api";
 
@@ -27,10 +28,11 @@ export default function NewTask() {
 
     try {
       await api.put(`/tarefas/${params.id}`, data);
+      toast.success("Tarefa alterada com sucesso!")
 
       history.push("/");
     } catch (err) {
-      alert("Erro ao editar tarefa, tente novamente.");
+      toast.error("Erro! Tente novamente.");
     }
   }
 
@@ -58,7 +60,6 @@ export default function NewTask() {
             <option value="" >Concluído</option>
             <option 
               value="1"
-              
             >
               Sim
             </option>
@@ -75,7 +76,3 @@ export default function NewTask() {
     </div>
   );
 }
-
-// placeholder="Concluído: Ex '0 ou 1'"
-// value={status}
-// onChange={(e) => setStatus(e.target.value)}

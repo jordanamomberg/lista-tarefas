@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 import api from "../../services/api";
 
@@ -25,10 +26,12 @@ export default function NewTask() {
     console.log(data)
     try {
       await api.post("/tarefas", data);
+      toast.success("Tarefa cadastrada com sucesso!")
 
-      history.push("/");
+      history.push("/")
+  
     } catch (err) {
-      alert("Erro ao cadastrar tarefa, tente novamente.");
+      toast.error("Erro! Tente novamente.");
     }
   }
 
@@ -53,17 +56,12 @@ export default function NewTask() {
           />
 
           <select onChange={(e) => setStatus(e.target.value)}>
-            <option value="" >Status</option>
-            <option 
-              value="1"
-              
-            >
-              OK
+            <option value="" >Concluido</option>
+            <option value="1">
+              Sim
             </option>
-            <option 
-              value="0"
-            >
-              Não OK
+            <option value="0">
+              Não
             </option>
           </select>
 

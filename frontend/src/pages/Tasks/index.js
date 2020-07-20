@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiTrash2, FiXCircle, FiCheckCircle, FiEdit, FiList } from "react-icons/fi";
+import { toast } from 'react-toastify';
 
 import api from "../../services/api";
 
@@ -22,10 +23,11 @@ export default function Tasks() {
   async function handleDeleteTask(id) {
     try {
       await api.delete(`/tarefas/${id}`);
+      toast.success("Excluído com sucesso!")
 
       setListTasks(listTasks.filter((task) => task.id !== id));
     } catch (err) {
-      alert("Erro ao deletar tarefa, tente novamente.");
+      toast.error("Erro! Tente novamente.")
     }
   }
 
@@ -47,7 +49,7 @@ export default function Tasks() {
 
             <strong>Concluído:</strong>
             <p>
-              {task.concluido == 0 ? (
+              {task.concluido === 0 ? (
                 <FiXCircle size={18} color="#FF0000" />
               ) : (
                 <FiCheckCircle size={18} color="#32CD32" />

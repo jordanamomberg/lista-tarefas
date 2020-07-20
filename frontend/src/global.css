@@ -7,6 +7,26 @@
     box-sizing: border-box;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #000; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #FF1493; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #000; 
+}
+
 body { 
     font: 400 14px Roboto, sans-serif;
     background: #000;
