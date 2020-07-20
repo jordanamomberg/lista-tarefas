@@ -16,9 +16,20 @@
     color: #fff;
 }
 
-.task-container h1 svg { 
+.task-container .list {
     margin-right: 16px;
 }
+
+.task-container .moretask  {
+    margin-left: auto;
+    display: flex;    
+    align-items: center;
+}
+
+.task-container .moretask:hover {
+    opacity: 0.5;
+}
+
 
 .task-container ul {
     display: grid;

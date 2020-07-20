@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiTrash2, FiXCircle, FiCheckCircle, FiEdit, FiList } from "react-icons/fi";
+import { FiTrash2, FiXCircle, FiCheckCircle, FiEdit, FiList, FiPlusCircle } from "react-icons/fi";
 import { toast } from 'react-toastify';
 
 import api from "../../services/api";
@@ -34,8 +34,11 @@ export default function Tasks() {
   return (
     <div className="task-container">
       <h1>
-        <FiList size={28} color="#FF1493"/> 
+        <FiList className="list" size={28} color="#FF1493"/> 
         Lista de Tarefas
+        <Link className="moretask" to="/cadastro">
+          <FiPlusCircle className="more" size={28} color="#FF1493"/> 
+        </Link>
       </h1>
 
       <ul>
