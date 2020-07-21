@@ -9,6 +9,7 @@ Implementado um CRUD para testes de conhecimento.
 - React-toastify
 - Axios
 - React-icons
+- Material-ui/core
 
 ### Start
 

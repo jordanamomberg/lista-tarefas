@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import { toast } from 'react-toastify';
+import { FormControl, FormControlLabel,FormLabel, Radio, RadioGroup  } from '@material-ui/core';
 
 import api from "../../services/api";
 
@@ -56,7 +57,16 @@ export default function NewTask() {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <select onChange={(e) => setStatus(e.target.value)}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Concluido</FormLabel>
+            <RadioGroup  onChange={(e) => setStatus(e.target.value)}>
+              <FormControlLabel value="1" control={<Radio />} label="Sim" />
+              <FormControlLabel value="0" control={<Radio />} label="Não" />
+            </RadioGroup>
+          </FormControl>
+
+
+          {/* <select onChange={(e) => setStatus(e.target.value)}>
             <option value="" >Concluído</option>
             <option 
               value="1"
@@ -68,7 +78,7 @@ export default function NewTask() {
             >
               Não
             </option>
-          </select>
+          </select> */}
           
           <button className="button">Salvar alterações</button>
         </form>
