@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { FormControl, FormControlLabel,FormLabel, Radio, RadioGroup  } from '@material-ui/core';
@@ -8,12 +7,15 @@ import api from "../../services/api";
 
 import "./styles.css";
 
-export default function NewTask() {
+const Modal = ({id = 'modal', onClose = () => {}, children}) => {
+  const [checkedItem, setCheckedItem] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
 
-  const history = useHistory();
+  const handleOutsideClose = (e) => {
+    if (e.target.id === id) onClose();
+  }
 
   async function handleNewTask(e) {
     e.preventDefault();
@@ -24,12 +26,11 @@ export default function NewTask() {
       concluido:status,
     };
 
-    console.log(data)
     try {
       await api.post("/tarefas", data);
       toast.success("Tarefa cadastrada com sucesso!")
 
-      history.push("/")
+      onClose();
 
     } catch (err) {
       toast.error("Erro! Tente novamente.");
@@ -37,10 +38,10 @@ export default function NewTask() {
   }
 
   return (
-    <div className="new-task-container">
+    <div className="new-task-container" id={id} onClick={handleOutsideClose} >
       <div className="content">
-        <button className="close" onClick={() => history.push('/')}>
-          <FiX size={24} color="#FF1493"/>
+        <button className="close" onClick={onClose}>
+          <FiX size={32} color="#FF1493"/>{children}
         </button>
 
         <form onSubmit={handleNewTask}>
@@ -60,7 +61,7 @@ export default function NewTask() {
 
           <FormControl component="fieldset">
             <FormLabel component="legend">Concluido</FormLabel>
-            <RadioGroup  onChange={(e) => setStatus(e.target.value)}>
+            <RadioGroup onChange={(e) => setStatus(e.target.value)}>
               <FormControlLabel value="1" control={<Radio />} label="Sim" />
               <FormControlLabel value="0" control={<Radio />} label="Não" />
             </RadioGroup>
@@ -84,3 +85,5 @@ export default function NewTask() {
     </div>
   );
 }
+
+export default Modal;

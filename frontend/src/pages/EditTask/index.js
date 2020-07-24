@@ -38,7 +38,7 @@ export default function NewTask() {
   }
 
   return (
-    <div className="new-task-container">
+    <div className="edit-task-container">
       <div className="content">
         <button className="close" onClick={() => history.push('/')}>
           <FiX size={24} color="#FF1493"/>
