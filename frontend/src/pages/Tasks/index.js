@@ -5,7 +5,7 @@ import {
   FiCheckCircle,
   FiEdit,
   FiList,
-  FiPlusCircle,
+  FiSearch,
 } from "react-icons/fi";
 import { toast } from "react-toastify";
 import Modal from "../../components/Modal";
@@ -15,9 +15,9 @@ import api from "../../services/api";
 import "./styles.css";
 
 export default function Tasks() {
-
   const [listTasks, setListTasks] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [editData, setEditData] = useState([]);
 
   useEffect(() => {
@@ -27,14 +27,16 @@ export default function Tasks() {
   }, [isModalVisible]);
 
   function handleNewTask() {
-    setEditData([])
-    setIsModalVisible(true)
-  };
+    setEditData([]);
+    setIsModalVisible(true);
+  }
 
   function handleEditTask(id, data) {
-    setEditData({id, ...data})
-    setIsModalVisible(true) 
-  };
+    setEditData({ id, ...data });
+    setIsModalVisible(true);
+  }
+
+  function handleInputVisible() {}
 
   async function handleDeleteTask(id) {
     try {
@@ -50,16 +52,25 @@ export default function Tasks() {
   return (
     <>
       {isModalVisible ? (
-      <Modal dados={editData} onClose={ () => setIsModalVisible(false) } />
+        <Modal dados={editData} onClose={() => setIsModalVisible(false)} />
       ) : null}
       <div className="task-container">
         <h1>
           <FiList className="list" size={28} color="#FF1493" />
           Lista de Tarefas
-          <a className="moretask" onClick={() => handleNewTask()}>
-            <FiPlusCircle className="more" size={24} color="#FF1493" />
+          <a
+            className="icone-search"
+            onClick={() => setIsSearchVisible(!isSearchVisible)}
+          >
+            <FiSearch size={24} color="#FF1493" />
           </a>
         </h1>
+
+        {isSearchVisible && (
+          <section>
+            <input className="search-input" placeholder="Buscar..." />
+          </section>
+        )}
 
         <ul>
           {listTasks.map((task) => (
@@ -80,14 +91,15 @@ export default function Tasks() {
               </p>
 
               <button
-                className="edit" 
-                onClick={() => 
-                    handleEditTask(`${task.id}`, {
+                className="edit"
+                onClick={() =>
+                  handleEditTask(`${task.id}`, {
                     // id: task.id,
                     title: task.titulo,
                     description: task.descricao,
                     status: task.concluido,
-                })}
+                  })
+                }
                 // onClick={() =>
                 //   push(`/editar/${task.id}`, {
                 //     title: task.titulo,
