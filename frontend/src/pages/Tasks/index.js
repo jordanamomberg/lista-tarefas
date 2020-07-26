@@ -31,10 +31,10 @@ export default function Tasks() {
     setIsModalVisible(true)
   };
 
-  // function handleEditTask(id, data) {
-  //   setEditData({id, ...data})
-  //   setIsModalVisible(true) 
-  // };
+  function handleEditTask(id, data) {
+    setEditData({id, ...data})
+    setIsModalVisible(true) 
+  };
 
   async function handleDeleteTask(id) {
     try {
@@ -56,7 +56,7 @@ export default function Tasks() {
         <h1>
           <FiList className="list" size={28} color="#FF1493" />
           Lista de Tarefas
-          <a href="#" className="moretask" onClick={() => handleNewTask()}>
+          <a className="moretask" onClick={() => handleNewTask()}>
             <FiPlusCircle className="more" size={24} color="#FF1493" />
           </a>
         </h1>
@@ -81,13 +81,13 @@ export default function Tasks() {
 
               <button
                 className="edit" 
-                // onClick={() => 
-                //     handleEditTask(`${listTasks.id}`, {
-                //     id: task.id,
-                //     title: task.titulo,
-                //     description: task.descricao,
-                //     status: task.concluido,
-                // })}
+                onClick={() => 
+                    handleEditTask(`${task.id}`, {
+                    // id: task.id,
+                    title: task.titulo,
+                    description: task.descricao,
+                    status: task.concluido,
+                })}
                 // onClick={() =>
                 //   push(`/editar/${task.id}`, {
                 //     title: task.titulo,
@@ -107,7 +107,7 @@ export default function Tasks() {
         </ul>
 
         <footer>
-          <a href="#" className="button" onClick={() => handleNewTask()}>
+          <a className="button" onClick={() => handleNewTask()}>
             Nova tarefa
           </a>
         </footer>

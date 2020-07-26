@@ -32,15 +32,17 @@ const Modal = ({ dados, id = "modal", onClose = () => {}, children }) => {
     };
 
     try {
-
-      await api.post("/tarefas", data);
-      toast.success("Tarefa cadastrada com sucesso!")
-
-      onClose();
-
+      if (dados.id) {
+        await api.put(`/tarefas/${dados.id}`, data);
+        toast.success("Tarefa Alterada com sucesso!")
+      } else {
+        await api.post("/tarefas", data);
+        toast.success("Tarefa cadastrada com sucesso!")
+      }
     } catch (err) {
       toast.error("Erro! Tente novamente.");
     }
+    onClose();
   }
 
   return (
@@ -52,11 +54,11 @@ const Modal = ({ dados, id = "modal", onClose = () => {}, children }) => {
         </button>
 
         <form onSubmit={handleNewTask}>
-          <input
+        <input
             placeholder="Título"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-          />
+          />        
 
           <textarea
             placeholder="Descrição"

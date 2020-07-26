@@ -85,6 +85,7 @@ form textarea {
     font-size: 18px;
     line-height: 60px;
     transition: 0.4s;
+    cursor: pointer;
 }
 
 button:hover { 
