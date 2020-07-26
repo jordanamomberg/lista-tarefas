@@ -42,6 +42,12 @@
     box-shadow: 0 0 50px rgba(255, 20, 147, 0.20);
     padding: 24px;
     position: relative;
+    width: 100%;
+    max-width: 435px;
+}
+
+.task-container ul li p {
+    overflow-wrap: break-word;
 }
 
 .task-container ul li button { 

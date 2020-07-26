@@ -1,32 +1,38 @@
 import React, { useState } from "react";
 import { FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { FormControl, FormControlLabel,FormLabel, Radio, RadioGroup  } from '@material-ui/core';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
 
 import api from "../../services/api";
 
 import "./styles.css";
 
-const Modal = ({id = 'modal', onClose = () => {}, children}) => {
-  const [checkedItem, setCheckedItem] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
+const Modal = ({ dados, id = "modal", onClose = () => {}, children }) => {
+  const [title, setTitle] = useState(dados.title);
+  const [description, setDescription] = useState(dados.description);
+  const [status, setStatus] = useState(dados.status);
 
   const handleOutsideClose = (e) => {
     if (e.target.id === id) onClose();
-  }
+  };
 
   async function handleNewTask(e) {
     e.preventDefault();
 
     const data = {
-      titulo:title,
-      descricao:description,
-      concluido:status,
+      titulo: title,
+      descricao: description,
+      concluido: status,
     };
 
     try {
+
       await api.post("/tarefas", data);
       toast.success("Tarefa cadastrada com sucesso!")
 
@@ -38,10 +44,11 @@ const Modal = ({id = 'modal', onClose = () => {}, children}) => {
   }
 
   return (
-    <div className="new-task-container" id={id} onClick={handleOutsideClose} >
+    <div className="new-task-container" id={id} onClick={handleOutsideClose}>
       <div className="content">
         <button className="close" onClick={onClose}>
-          <FiX size={32} color="#FF1493"/>{children}
+          <FiX size={32} color="#FF1493" />
+          {children}
         </button>
 
         <form onSubmit={handleNewTask}>
@@ -84,6 +91,6 @@ const Modal = ({id = 'modal', onClose = () => {}, children}) => {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

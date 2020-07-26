@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import {
   FiTrash2,
   FiXCircle,
@@ -16,16 +15,26 @@ import api from "../../services/api";
 import "./styles.css";
 
 export default function Tasks() {
-  const { push } = useHistory();
 
   const [listTasks, setListTasks] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editData, setEditData] = useState([]);
 
   useEffect(() => {
     api.get("/tarefas").then((response) => {
       setListTasks(response.data);
     });
   }, [isModalVisible]);
+
+  function handleNewTask() {
+    setEditData([])
+    setIsModalVisible(true)
+  };
+
+  // function handleEditTask(id, data) {
+  //   setEditData({id, ...data})
+  //   setIsModalVisible(true) 
+  // };
 
   async function handleDeleteTask(id) {
     try {
@@ -40,14 +49,14 @@ export default function Tasks() {
 
   return (
     <>
-      {isModalVisible ? ( 
-      <Modal onClose={ () => setIsModalVisible(false) } /> 
+      {isModalVisible ? (
+      <Modal dados={editData} onClose={ () => setIsModalVisible(false) } />
       ) : null}
       <div className="task-container">
         <h1>
           <FiList className="list" size={28} color="#FF1493" />
           Lista de Tarefas
-          <a href="#" className="moretask" onClick={() => setIsModalVisible(true)}>
+          <a href="#" className="moretask" onClick={() => handleNewTask()}>
             <FiPlusCircle className="more" size={24} color="#FF1493" />
           </a>
         </h1>
@@ -71,14 +80,21 @@ export default function Tasks() {
               </p>
 
               <button
-                className="edit"
-                onClick={() =>
-                  push(`/editar/${task.id}`, {
-                    title: task.titulo,
-                    description: task.descricao,
-                    status: task.concluido,
-                  })
-                }
+                className="edit" 
+                // onClick={() => 
+                //     handleEditTask(`${listTasks.id}`, {
+                //     id: task.id,
+                //     title: task.titulo,
+                //     description: task.descricao,
+                //     status: task.concluido,
+                // })}
+                // onClick={() =>
+                //   push(`/editar/${task.id}`, {
+                //     title: task.titulo,
+                //     description: task.descricao,
+                //     status: task.concluido,
+                //   })
+                // }
               >
                 <FiEdit size={18} color="#FF1493" />
               </button>
@@ -91,7 +107,7 @@ export default function Tasks() {
         </ul>
 
         <footer>
-          <a href="#" className="button" onClick={() => setIsModalVisible(true)}>
+          <a href="#" className="button" onClick={() => handleNewTask()}>
             Nova tarefa
           </a>
         </footer>
