@@ -19,12 +19,25 @@ export default function Tasks() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [editData, setEditData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    setFiltered(listTasks)
+  }, [listTasks]);
 
   useEffect(() => {
     api.get("/tarefas").then((response) => {
       setListTasks(response.data);
     });
+
+
   }, [isModalVisible]);
+
+  function todasTasks(palavra) {
+    listTasks.map((listTask) => {
+      console.log(listTask.titulo.includes(palavra));
+    });
+  }
 
   function handleNewTask() {
     setEditData([]);
@@ -35,8 +48,6 @@ export default function Tasks() {
     setEditData({ id, ...data });
     setIsModalVisible(true);
   }
-
-  function handleInputVisible() {}
 
   async function handleDeleteTask(id) {
     try {
@@ -62,18 +73,22 @@ export default function Tasks() {
             className="icone-search"
             onClick={() => setIsSearchVisible(!isSearchVisible)}
           >
-            <FiSearch size={24} color="#FF1493" />
+            <FiSearch size={24} color="#FF1493"/>
           </a>
         </h1>
 
         {isSearchVisible && (
           <section>
-            <input className="search-input" placeholder="Buscar..." />
+            <input
+              className="search-input"
+              placeholder="Buscar..."
+              onChange={(e) => todasTasks(e.target.value)}
+            />
           </section>
         )}
 
         <ul>
-          {listTasks.map((task) => (
+          {filtered.map((task) => (
             <li key={task.id}>
               <strong>Título:</strong>
               <p>{task.titulo}</p>
